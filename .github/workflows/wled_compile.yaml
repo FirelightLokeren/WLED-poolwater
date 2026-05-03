@@ -30,8 +30,6 @@ jobs:
         echo 'custom_usermods = wifi_status_led' >>platformio.ini
         echo 'build_unflags= -D WLED_RELEASE_NAME' >>platformio.ini
         echo 'board_build.arduino.memory_type = qio_qspi' >>platformio.ini
-        echo 'board_build.flash_mode = qio' >>platformio.ini
-        echo 'board_build.f_flash = 40000000' >>platformio.ini
         pio run -e custom_build || pio run -e custom_build
     - name: Copy Files
       run: |
