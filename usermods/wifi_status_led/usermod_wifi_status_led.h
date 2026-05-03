@@ -28,7 +28,7 @@ public:
       if (now - lastBlink > CONNECTING_BLINK_MS) {
         lastBlink  = now;
         blinkState = !blinkState;
-        if (blinkState) setLedColor(5, 3, 0);  // geel
+        if (blinkState) setLedColor(50, 30, 0);  // geel
         else setLedColor(0, 0, 0);
       }
       return;
