@@ -8,7 +8,7 @@ private:
   static const uint16_t UPDATE_INTERVAL_MS  = 2000;
   
   static const uint8_t  TOUCH_PIN         = 1;
-  static const uint16_t TOUCH_THRESHOLD   = 40000; // aanpassen indien nodig
+  static const uint16_t MY_TOUCH_THRESHOLD   = 40000; // aanpassen indien nodig
   static const uint16_t TOUCH_DEBOUNCE_MS = 500;
 
 
@@ -25,7 +25,7 @@ private:
     if (now - lastTouch < TOUCH_DEBOUNCE_MS) return;
     
     uint32_t touchValue = touchRead(TOUCH_PIN);
-    if (touchValue < TOUCH_THRESHOLD) {
+    if (touchValue < MY_TOUCH_THRESHOLD) {
       lastTouch = now;
       wifiEnabled = !wifiEnabled;
       if (wifiEnabled) {
