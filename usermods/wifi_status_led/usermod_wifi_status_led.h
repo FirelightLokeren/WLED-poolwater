@@ -29,7 +29,7 @@ private:
       lastTouch   = now;
       wifiEnabled = !wifiEnabled;
       if (wifiEnabled) {
-        initConnection();
+        ESP.restart();
       } else {
         WiFi.disconnect(true);
         WiFi.mode(WIFI_OFF);
