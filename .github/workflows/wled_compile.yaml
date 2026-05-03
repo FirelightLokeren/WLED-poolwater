@@ -29,7 +29,7 @@ jobs:
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32s3_4M_qspi' >>platformio.ini
-        echo 'build_flags = ${env:esp32s3_4M_qspi.build_flags} -D USERMOD_BATTERY -D USERMOD_WIFI_STATUS_LED' >>platformio.ini
+        echo 'custom_usermods = Battery wifi_status_led' >>platformio.ini
         echo 'build_unflags= -D WLED_RELEASE_NAME' >>platformio.ini
         pio run -e custom_build || pio run -e custom_build
     - name: Copy Files
