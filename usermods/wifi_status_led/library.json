@@ -1,0 +1,7 @@
+{
+  "name": "wifi_status_led",
+  "version": "1.0.0",
+  "build": {
+    "flags": ["-D USERMOD_WIFI_STATUS_LED"]
+  }
+}
