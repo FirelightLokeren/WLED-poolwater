@@ -28,7 +28,7 @@ public:
       if (now - lastBlink > CONNECTING_BLINK_MS) {
         lastBlink  = now;
         blinkState = !blinkState;
-        if (blinkState) setLedColor(3, 5, 0);  // GRB: G=50, R=80, B=0 = geel
+        if (blinkState) setLedColor(5, 3, 0);  // geel
         else setLedColor(0, 0, 0);
       }
       return;
@@ -38,9 +38,9 @@ public:
     lastUpdate = now;
 
     if (WiFi.status() == WL_CONNECTED) {
-      setLedColor(20, 0, 0);  // GRB: G=2, R=0, B=0 = groen
+      setLedColor(0, 20, 0);  // groen
     } else if (apActive) {
-      setLedColor(0, 20, 0);  // GRB: G=0, R=2, B=0 = rood
+      setLedColor( 20, 0, 0);  // rood
     }
   }
 
