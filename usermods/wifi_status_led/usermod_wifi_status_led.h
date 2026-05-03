@@ -6,6 +6,11 @@ private:
   static const uint8_t  LED_PIN           = 48;
   static const uint16_t CONNECTING_BLINK_MS = 500;
   static const uint16_t UPDATE_INTERVAL_MS  = 2000;
+  
+  static const uint8_t  TOUCH_PIN         = 1;
+  static const uint16_t TOUCH_THRESHOLD   = 40000; // aanpassen indien nodig
+  static const uint16_t TOUCH_DEBOUNCE_MS = 500;
+
 
   uint32_t lastUpdate = 0;
   uint32_t lastBlink  = 0;
@@ -15,6 +20,23 @@ private:
     neopixelWrite(LED_PIN, r, g, b);
   }
 
+  void checkTouch() {
+    uint32_t now = millis();
+    if (now - lastTouch < TOUCH_DEBOUNCE_MS) return;
+    
+    uint32_t touchValue = touchRead(TOUCH_PIN);
+    if (touchValue < TOUCH_THRESHOLD) {
+      lastTouch = now;
+      wifiEnabled = !wifiEnabled;
+      if (wifiEnabled) {
+        WiFi.begin();
+      } else {
+        WiFi.disconnect(true);
+      }
+    }
+  }
+
+
 public:
   void setup() override {
     // LED pin initialiseren
@@ -22,6 +44,7 @@ public:
   }
 
   void loop() override {
+    checkTouch();
     uint32_t now = millis();
 
     if (WiFi.status() != WL_CONNECTED && !apActive) {
