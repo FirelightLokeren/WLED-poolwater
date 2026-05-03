@@ -3,7 +3,7 @@
 
 class WifiStatusLedUsermod : public Usermod {
 private:
-  static const uint8_t  STATUS_SEG          = 1;
+  static const uint8_t  LED_PIN           = 48;
   static const uint16_t CONNECTING_BLINK_MS = 500;
   static const uint16_t UPDATE_INTERVAL_MS  = 2000;
 
@@ -11,18 +11,15 @@ private:
   uint32_t lastBlink  = 0;
   bool     blinkState = false;
 
-  void setSegmentColor(uint32_t color) {
-    if (STATUS_SEG >= strip.getSegmentsNum()) return;
-    Segment& seg = strip.getSegment(STATUS_SEG);
-    seg.setColor(0, color);
-    seg.setOption(SEG_OPTION_ON, true);
-    seg.mode       = FX_MODE_STATIC;
-    stateChanged   = true;
-    colorUpdated(CALL_MODE_DIRECT_CHANGE);
+  void setLedColor(uint8_t r, uint8_t g, uint8_t b) {
+    neopixelWrite(LED_PIN, r, g, b);
   }
 
 public:
-  void setup() override {}
+  void setup() override {
+    // LED pin initialiseren
+    pinMode(LED_PIN, OUTPUT);
+  }
 
   void loop() override {
     uint32_t now = millis();
@@ -31,7 +28,8 @@ public:
       if (now - lastBlink > CONNECTING_BLINK_MS) {
         lastBlink  = now;
         blinkState = !blinkState;
-        setSegmentColor(blinkState ? 0xFFAA00 : 0x000000);
+        if (blinkState) setLedColor(80, 50, 0); // geel
+        else setLedColor(0, 0, 0);
       }
       return;
     }
@@ -40,9 +38,9 @@ public:
     lastUpdate = now;
 
     if (WiFi.status() == WL_CONNECTED) {
-      setSegmentColor(0x002200); // groen = verbonden
+      setLedColor(0, 20, 0); // groen
     } else if (apActive) {
-      setSegmentColor(0x220000); // rood = AP-modus
+      setLedColor(20, 0, 0); // rood
     }
   }
 
