@@ -17,7 +17,6 @@ private:
     seg.setColor(0, color);
     seg.setOption(SEG_OPTION_ON, true);
     seg.mode       = FX_MODE_STATIC;
-    seg.brightness = 80;
     stateChanged   = true;
     colorUpdated(CALL_MODE_DIRECT_CHANGE);
   }
