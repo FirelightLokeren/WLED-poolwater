@@ -15,6 +15,8 @@ private:
   uint32_t lastUpdate = 0;
   uint32_t lastBlink  = 0;
   bool     blinkState = false;
+  uint32_t lastTouch  = 0;
+  bool     wifiEnabled = true;
 
   void setLedColor(uint8_t r, uint8_t g, uint8_t b) {
     neopixelWrite(LED_PIN, r, g, b);
