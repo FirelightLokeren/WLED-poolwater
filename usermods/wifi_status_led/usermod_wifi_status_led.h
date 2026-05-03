@@ -40,6 +40,7 @@ private:
 public:
   void setup() override {
     pinMode(LED_PIN, OUTPUT);
+    WiFi.mode(WIFI_STA);  // forceer WiFi aan bij boot
   }
 
   void loop() override {
