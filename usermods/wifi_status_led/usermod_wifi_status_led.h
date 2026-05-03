@@ -49,7 +49,5 @@ public:
   uint16_t getId() override { return USERMOD_ID_UNSPECIFIED; }
 };
 
-#ifdef USERMOD_WIFI_STATUS_LED
 static WifiStatusLedUsermod wifi_status_led_mod;
 REGISTER_USERMOD(wifi_status_led_mod);
-#endif
