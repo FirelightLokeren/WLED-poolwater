@@ -11,7 +11,7 @@ class WifiStatusLedUsermod : public Usermod {
 private:
   static const uint8_t  LED_PIN            = 48;
   static const uint8_t  TOUCH_PIN          = 1;
-  static const uint16_t MY_TOUCH_THRESHOLD = 80000;
+  static const uint16_t MY_TOUCH_THRESHOLD = 60000;
   static const uint16_t TOUCH_DEBOUNCE_MS  = 1000;
 
   uint32_t lastTouch = 0;
@@ -29,6 +29,7 @@ public:
     if (_touchDetected && (now - lastTouch > TOUCH_DEBOUNCE_MS)) {
       _touchDetected = false;
       lastTouch = now;
+      Serial.printf("Touch triggered! Threshold: %d\n", MY_TOUCH_THRESHOLD);
       if (strip.getSegmentsNum() > 0) {
         Segment& seg = strip.getSegment(0);
         seg.setOption(SEG_OPTION_ON, !seg.getOption(SEG_OPTION_ON));
