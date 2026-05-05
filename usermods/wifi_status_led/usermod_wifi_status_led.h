@@ -9,10 +9,10 @@ private:
   static const uint16_t TOUCH_DEBOUNCE_MS  = 500;
 
   uint32_t lastTouch = 0;
-  volatile bool touchDetected = false;
+  static volatile bool touchDetected;
 
   static void IRAM_ATTR touchISR() {
-    // wordt aangeroepen bij touch detectie
+    touchDetected = true;
   }
 
 public:
@@ -25,7 +25,8 @@ public:
     if (millis() < 5000) return;
 
     uint32_t now = millis();
-    if (touchInterruptGetLastStatus(TOUCH_PIN) && (now - lastTouch > TOUCH_DEBOUNCE_MS)) {
+    if (touchDetected && (now - lastTouch > TOUCH_DEBOUNCE_MS)) {
+      touchDetected = false;
       lastTouch = now;
       if (strip.getSegmentsNum() > 0) {
         Segment& seg = strip.getSegment(0);
@@ -38,6 +39,8 @@ public:
 
   uint16_t getId() override { return USERMOD_ID_UNSPECIFIED; }
 };
+
+volatile bool WifiStatusLedUsermod::touchDetected = false;
 
 static WifiStatusLedUsermod wifi_status_led_mod;
 REGISTER_USERMOD(wifi_status_led_mod);
