@@ -1,6 +1,12 @@
 #pragma once
 #include "wled.h"
 
+static volatile bool _touchDetected = false;
+
+void IRAM_ATTR _touchISR() {
+  _touchDetected = true;
+}
+
 class WifiStatusLedUsermod : public Usermod {
 private:
   static const uint8_t  LED_PIN            = 48;
@@ -9,24 +15,19 @@ private:
   static const uint16_t TOUCH_DEBOUNCE_MS  = 500;
 
   uint32_t lastTouch = 0;
-  static volatile bool touchDetected;
-
-  static void IRAM_ATTR touchISR() {
-    touchDetected = true;
-  }
 
 public:
   void setup() override {
     pinMode(LED_PIN, OUTPUT);
-    touchAttachInterrupt(TOUCH_PIN, touchISR, MY_TOUCH_THRESHOLD);
+    touchAttachInterrupt(TOUCH_PIN, _touchISR, MY_TOUCH_THRESHOLD);
   }
 
   void loop() override {
     if (millis() < 5000) return;
 
     uint32_t now = millis();
-    if (touchDetected && (now - lastTouch > TOUCH_DEBOUNCE_MS)) {
-      touchDetected = false;
+    if (_touchDetected && (now - lastTouch > TOUCH_DEBOUNCE_MS)) {
+      _touchDetected = false;
       lastTouch = now;
       if (strip.getSegmentsNum() > 0) {
         Segment& seg = strip.getSegment(0);
@@ -39,8 +40,6 @@ public:
 
   uint16_t getId() override { return USERMOD_ID_UNSPECIFIED; }
 };
-
-volatile bool WifiStatusLedUsermod::touchDetected = false;
 
 static WifiStatusLedUsermod wifi_status_led_mod;
 REGISTER_USERMOD(wifi_status_led_mod);
