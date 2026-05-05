@@ -43,7 +43,7 @@ public:
 
   void loop() override {
     if (millis() < 5000) return;
-    checkTouch();
+    // checkTouch();  // tijdelijk uitgeschakeld
 
     uint32_t now = millis();
 
