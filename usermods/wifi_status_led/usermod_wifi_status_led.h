@@ -71,4 +71,4 @@ public:
 };
 
 static WifiStatusLedUsermod wifi_status_led_mod;
-REGISTER_USERMO
+REGISTER_USERMOD(wifi_status_led_mod);
