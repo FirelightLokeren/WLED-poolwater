@@ -32,7 +32,7 @@ jobs:
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32s3_4M_qspi' >>platformio.ini
         echo 'build_flags = ${env:esp32s3_4M_qspi.build_flags} ${common.debug_flags} -D WLED_DEBUG -D CLIENT_SSID='\''"WiFi-2.4-4809"'\'' -D CLIENT_PASS='\''"7BC8B14723"'\'' -DLOLIN_WIFI_FIX' >>platformio.ini
-        echo 'custom_usermods = ' >>platformio.ini
+        echo 'custom_usermods = deep_sleep' >>platformio.ini
         
         echo 'build_unflags= -D WLED_RELEASE_NAME' >>platformio.ini
         pio run -e custom_build || pio run -e custom_build
