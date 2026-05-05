@@ -11,8 +11,8 @@ class WifiStatusLedUsermod : public Usermod {
 private:
   static const uint8_t  LED_PIN            = 48;
   static const uint8_t  TOUCH_PIN          = 1;
-  static const uint16_t MY_TOUCH_THRESHOLD = 40000;
-  static const uint16_t TOUCH_DEBOUNCE_MS  = 500;
+  static const uint16_t MY_TOUCH_THRESHOLD = 80000;
+  static const uint16_t TOUCH_DEBOUNCE_MS  = 1000;
 
   uint32_t lastTouch = 0;
 
